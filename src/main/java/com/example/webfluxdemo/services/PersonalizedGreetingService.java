@@ -17,8 +17,8 @@ public class PersonalizedGreetingService {
     private final TranslationAdapter translationAdapter;
 
     public PersonalizedGreeting personalizeGreeting(int userId) {
-        User user = userAdapter.getUser(userId);
-        String greeting = translationAdapter.getTranslation(GREETING_WORD, user.getLanguage());
+        User user = userAdapter.getUser(userId).block();
+        String greeting = translationAdapter.getTranslation(GREETING_WORD, user.getLanguage()).block();
 
         return new PersonalizedGreeting(greeting, user.getName());
     }

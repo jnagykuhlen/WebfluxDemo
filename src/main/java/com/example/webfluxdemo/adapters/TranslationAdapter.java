@@ -3,6 +3,7 @@ package com.example.webfluxdemo.adapters;
 import com.example.webfluxdemo.AbstractAdapter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @Component
 public class TranslationAdapter extends AbstractAdapter<String> {
@@ -17,8 +18,8 @@ public class TranslationAdapter extends AbstractAdapter<String> {
         super(webClient, URL_PREFIX);
     }
 
-    public String getTranslation(String word, String language) {
-        return sendRequest(word + "/" + language, String.class).block();
+    public Mono<String> getTranslation(String word, String language) {
+        return sendRequest(word + "/" + language, String.class);
     }
 
 }

@@ -4,6 +4,7 @@ import com.example.webfluxdemo.AbstractAdapter;
 import com.example.webfluxdemo.model.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @Component
 public class UserAdapter extends AbstractAdapter<User> {
@@ -18,8 +19,8 @@ public class UserAdapter extends AbstractAdapter<User> {
         super(webClient, URL_PREFIX);
     }
 
-    public User getUser(int userId) {
-        return sendRequest(Integer.toString(userId), User.class).block();
+    public Mono<User> getUser(int userId) {
+        return sendRequest(Integer.toString(userId), User.class);
     }
 
 }

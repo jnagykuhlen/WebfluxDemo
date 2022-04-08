@@ -5,6 +5,7 @@ import com.example.webfluxdemo.adapters.UserAdapter;
 import com.example.webfluxdemo.model.PersonalizedGreeting;
 import com.example.webfluxdemo.model.User;
 import org.junit.jupiter.api.Test;
+import reactor.core.publisher.Mono;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.mock;
@@ -22,8 +23,8 @@ class PersonalizedGreetingServiceTest {
 
     @Test
     void testPersonalizeGreeting() {
-        when(userAdapter.getUser(123)).thenReturn(new User("Francois", "fr-FR"));
-        when(translationAdapter.getTranslation("hello", "fr-FR")).thenReturn("Bonjour");
+        when(userAdapter.getUser(123)).thenReturn(Mono.just(new User("Francois", "fr-FR")));
+        when(translationAdapter.getTranslation("hello", "fr-FR")).thenReturn(Mono.just("Bonjour"));
 
         PersonalizedGreeting actual = personalizedGreetingService.personalizeGreeting(123);
 

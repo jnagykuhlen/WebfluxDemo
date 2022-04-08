@@ -31,7 +31,7 @@ class TranslationAdapterTest {
                         .build()
         ));
 
-        assertThat(translationAdapter.getTranslation("hello", "de-DE")).isEqualTo("Hallo");
+        assertThat(translationAdapter.getTranslation("hello", "de-DE").block()).isEqualTo("Hallo");
     }
 
     @Test
@@ -40,7 +40,7 @@ class TranslationAdapterTest {
                 ClientResponse.create(HttpStatus.NOT_FOUND).build()
         ));
 
-        assertThatThrownBy(() -> translationAdapter.getTranslation("hello", "it-IT"))
+        assertThatThrownBy(() -> translationAdapter.getTranslation("hello", "it-IT").block())
                 .hasMessage("Received status <Not Found> for URL: http://localhost:8040/api/translations/hello/it-IT");
     }
 }
