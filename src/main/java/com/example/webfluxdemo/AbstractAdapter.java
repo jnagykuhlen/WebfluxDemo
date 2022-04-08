@@ -1,29 +1,33 @@
 package com.example.webfluxdemo;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @AllArgsConstructor
 public abstract class AbstractAdapter<T> {
 
     public static class NetworkException extends RuntimeException {
-        public NetworkException(String message, Throwable cause) {
-            super(message, cause);
+        public NetworkException(String message) {
+            super(message);
         }
     }
 
-    private final RestTemplate restTemplate;
+    private final WebClient webClient;
     private final String urlPrefix;
 
     protected T sendRequest(String urlSuffix, Class<T> responseClass) {
         String url = urlPrefix + urlSuffix;
-        try {
-            return restTemplate.getForEntity(url, responseClass).getBody();
-        } catch (HttpClientErrorException clientException) {
-            String message = "Received status <" + clientException.getStatusText() + "> for URL: " + url;
-            throw new NetworkException(message, clientException);
-        }
+        return webClient.get()
+                .uri(url)
+                .retrieve()
+                .onStatus(HttpStatus::is4xxClientError, response -> {
+                    String message = "Received status <" + response.statusCode().getReasonPhrase() + "> for URL: " + url;
+                    return Mono.error(new NetworkException(message));
+                })
+                .bodyToMono(responseClass)
+                .block();
     }
 
 }
