@@ -1,13 +1,11 @@
-package com.example.webfluxdemo;
+package com.example.webfluxdemo
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.runApplication
+
+fun main(args: Array<String>) {
+    runApplication<GreetingApplication>(*args)
+}
 
 @SpringBootApplication
-public class GreetingApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(GreetingApplication.class, args);
-	}
-
-}
+open class GreetingApplication

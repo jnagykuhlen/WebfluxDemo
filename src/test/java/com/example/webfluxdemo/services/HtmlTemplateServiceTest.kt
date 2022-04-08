@@ -1,22 +1,21 @@
-package com.example.webfluxdemo.services;
+package com.example.webfluxdemo.services
 
-import org.junit.jupiter.api.Test;
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 
-import static org.assertj.core.api.Assertions.assertThat;
+internal class HtmlTemplateServiceTest {
 
-class HtmlTemplateServiceTest {
-
-    private final HtmlTemplateService htmlTemplateService = new HtmlTemplateService();
+    private val htmlTemplateService = HtmlTemplateService()
 
     @Test
-    void testCreateHtml() {
-        String result = htmlTemplateService.createHtml("Hello", "World");
-        assertThat(result).isEqualTo("<body><h1>Hello <i>World</i>!</h1></body>");
+    fun testCreateHtml() {
+        val result = htmlTemplateService.createHtml("Hello", "World")
+        assertThat(result).isEqualTo("<body><h1>Hello <i>World</i>!</h1></body>")
     }
 
     @Test
-    void testCreateErrorHtml() {
-        String result = htmlTemplateService.createErrorHtml("I am Error");
-        assertThat(result).isEqualTo("<body><h1 style=\"color:red\">I am Error</h1></body>");
+    fun testCreateErrorHtml() {
+        val result = htmlTemplateService.createErrorHtml("I am Error")
+        assertThat(result).isEqualTo("<body><h1 style=\"color:red\">I am Error</h1></body>")
     }
 }

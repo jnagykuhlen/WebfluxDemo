@@ -1,14 +1,6 @@
-package com.example.webfluxdemo.model;
+package com.example.webfluxdemo.model
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Value;
+import com.fasterxml.jackson.annotation.JsonProperty
 
-@Value
-@AllArgsConstructor
-@NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
-public class User {
-    String name;
-    String language;
-}
+data class User(@JsonProperty("name") val name: String,
+                @JsonProperty("language") val language: String)

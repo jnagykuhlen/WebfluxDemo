@@ -1,46 +1,42 @@
-package com.example.webfluxdemo.adapters;
+package com.example.webfluxdemo.adapters
 
-import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.reactive.function.client.ClientResponse;
-import org.springframework.web.reactive.function.client.ExchangeFunction;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import io.mockk.every
+import io.mockk.mockk
+import org.assertj.core.api.AssertionsForClassTypes.assertThat
+import org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy
+import org.junit.jupiter.api.Test
+import org.springframework.http.HttpStatus
+import org.springframework.web.reactive.function.client.ClientResponse
+import org.springframework.web.reactive.function.client.ExchangeFunction
+import org.springframework.web.reactive.function.client.WebClient
+import reactor.core.publisher.Mono
 
 class TranslationAdapterTest {
 
-    private final ExchangeFunction exchangeFunction = mock(ExchangeFunction.class);
+    private val exchangeFunction = mockk<ExchangeFunction>()
 
-    private final WebClient webClient = WebClient.builder()
+    private val webClient = WebClient.builder()
             .exchangeFunction(exchangeFunction)
-            .build();
+            .build()
 
-    private final TranslationAdapter translationAdapter = new TranslationAdapter(webClient);
+    private val translationAdapter = TranslationAdapter(webClient)
 
     @Test
-    void testGetTranslationOk() {
-        when(exchangeFunction.exchange(any())).thenReturn(Mono.just(
-                ClientResponse.create(HttpStatus.OK)
+    fun testGetTranslationOk() {
+        every { exchangeFunction.exchange(any()) } returns
+                Mono.just(ClientResponse.create(HttpStatus.OK)
                         .body("Hallo")
-                        .build()
-        ));
+                        .build())
 
-        assertThat(translationAdapter.getTranslation("hello", "de-DE").block()).isEqualTo("Hallo");
+        assertThat(translationAdapter.getTranslation("hello", "de-DE").block()).isEqualTo("Hallo")
     }
 
     @Test
-    void testGetTranslationNotFound() {
-        when(exchangeFunction.exchange(any())).thenReturn(Mono.just(
-                ClientResponse.create(HttpStatus.NOT_FOUND).build()
-        ));
+    fun testGetTranslationNotFound() {
+        every { exchangeFunction.exchange(any()) } returns
+                Mono.just(ClientResponse.create(HttpStatus.NOT_FOUND).build())
 
-        assertThatThrownBy(() -> translationAdapter.getTranslation("hello", "it-IT").block())
-                .hasMessage("Received status <Not Found> for URL: http://localhost:8040/api/translations/hello/it-IT");
+        assertThatThrownBy { translationAdapter.getTranslation("hello", "it-IT").block() }
+                .hasMessage("Received status <Not Found> for URL: http://localhost:8040/api/translations/hello/it-IT")
     }
 }

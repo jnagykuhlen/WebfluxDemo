@@ -1,13 +1,11 @@
-package com.example.webfluxdemo;
+package com.example.webfluxdemo
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.Test
+import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
 class GreetingApplicationTest {
-
-	@Test
-	void testContextLoads() {
-	}
-
+    @Test
+    fun testContextLoads() {
+    }
 }

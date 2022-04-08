@@ -1,14 +1,6 @@
-package com.example.webfluxdemo.model;
+package com.example.webfluxdemo.model
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Value;
+import com.fasterxml.jackson.annotation.JsonProperty
 
-@Value
-@AllArgsConstructor
-@NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
-public class PersonalizedGreeting {
-    String greeting;
-    String name;
-}
+data class PersonalizedGreeting(@JsonProperty("greeting") val greeting: String,
+                                @JsonProperty("name") val name: String)

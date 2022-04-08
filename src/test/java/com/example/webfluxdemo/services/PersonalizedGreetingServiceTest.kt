@@ -1,34 +1,35 @@
-package com.example.webfluxdemo.services;
+package com.example.webfluxdemo.services
 
-import com.example.webfluxdemo.adapters.TranslationAdapter;
-import com.example.webfluxdemo.adapters.UserAdapter;
-import com.example.webfluxdemo.model.PersonalizedGreeting;
-import com.example.webfluxdemo.model.User;
-import org.junit.jupiter.api.Test;
-import reactor.core.publisher.Mono;
+import com.example.webfluxdemo.adapters.TranslationAdapter
+import com.example.webfluxdemo.adapters.UserAdapter
+import com.example.webfluxdemo.model.PersonalizedGreeting
+import com.example.webfluxdemo.model.User
+import io.mockk.every
+import io.mockk.mockk
+import org.assertj.core.api.AssertionsForClassTypes.assertThat
+import org.junit.jupiter.api.Test
+import reactor.core.publisher.Mono
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+internal class PersonalizedGreetingServiceTest {
 
-class PersonalizedGreetingServiceTest {
+    private val userAdapter = mockk<UserAdapter>()
+    private val translationAdapter = mockk<TranslationAdapter>()
 
-    private final UserAdapter userAdapter = mock(UserAdapter.class);
-    private final TranslationAdapter translationAdapter = mock(TranslationAdapter.class);
-
-    private final PersonalizedGreetingService personalizedGreetingService = new PersonalizedGreetingService(
+    private val personalizedGreetingService = PersonalizedGreetingService(
             userAdapter,
             translationAdapter
-    );
+    )
 
     @Test
-    void testPersonalizeGreeting() {
-        when(userAdapter.getUser(123)).thenReturn(Mono.just(new User("Francois", "fr-FR")));
-        when(translationAdapter.getTranslation("hello", "fr-FR")).thenReturn(Mono.just("Bonjour"));
+    fun testPersonalizeGreeting() {
+        every { userAdapter.getUser(123) } returns
+                Mono.just(User("Francois", "fr-FR"))
 
-        PersonalizedGreeting actual = personalizedGreetingService.personalizeGreeting(123).block();
+        every { translationAdapter.getTranslation("hello", "fr-FR") } returns
+                Mono.just("Bonjour")
 
-        PersonalizedGreeting expected = new PersonalizedGreeting("Bonjour", "Francois");
-        assertThat(actual).isEqualTo(expected);
+        val actual = personalizedGreetingService.personalizeGreeting(123).block()
+        val expected = PersonalizedGreeting("Bonjour", "Francois")
+        assertThat(actual).isEqualTo(expected)
     }
 }
