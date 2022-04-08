@@ -26,7 +26,7 @@ class PersonalizedGreetingServiceTest {
         when(userAdapter.getUser(123)).thenReturn(Mono.just(new User("Francois", "fr-FR")));
         when(translationAdapter.getTranslation("hello", "fr-FR")).thenReturn(Mono.just("Bonjour"));
 
-        PersonalizedGreeting actual = personalizedGreetingService.personalizeGreeting(123);
+        PersonalizedGreeting actual = personalizedGreetingService.personalizeGreeting(123).block();
 
         PersonalizedGreeting expected = new PersonalizedGreeting("Bonjour", "Francois");
         assertThat(actual).isEqualTo(expected);

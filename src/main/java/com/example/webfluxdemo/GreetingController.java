@@ -23,7 +23,7 @@ public class GreetingController {
     @GetMapping(value = "/hello/{userId}", produces = MediaType.TEXT_HTML_VALUE)
     public String getHello(@PathVariable int userId) {
         try {
-            PersonalizedGreeting personalizedGreeting = personalizedGreetingService.personalizeGreeting(userId);
+            PersonalizedGreeting personalizedGreeting = personalizedGreetingService.personalizeGreeting(userId).block();
             return htmlTemplateService.createHtml(
                     personalizedGreeting.getGreeting(),
                     personalizedGreeting.getName()
