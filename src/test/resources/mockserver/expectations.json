@@ -1,0 +1,89 @@
+[
+  {
+    "httpRequest": {
+      "path": "/api/users/42"
+    },
+    "httpResponse": {
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "{ \"name\": \"Alice\", \"language\": \"en-US\" }",
+      "delay": {
+        "timeUnit": "MILLISECONDS",
+        "value": 500
+      }
+    }
+  },
+  {
+    "httpRequest": {
+      "path": "/api/users/123"
+    },
+    "httpResponse": {
+      "headers": {
+        "Content-Type": [
+          "application/json"
+        ]
+      },
+      "body": "{ \"name\": \"Francois\", \"language\": \"fr-FR\" }",
+      "delay": {
+        "timeUnit": "MILLISECONDS",
+        "value": 500
+      }
+    }
+  },
+
+
+  {
+    "httpRequest": {
+      "path": "/api/translations/hello/en-US"
+    },
+    "httpResponse": {
+      "headers": {
+        "Content-Type": [
+          "text/plain"
+        ]
+      },
+      "body": "Hello",
+      "delay": {
+        "timeUnit": "MILLISECONDS",
+        "value": 300
+      }
+    }
+  },
+  {
+    "httpRequest": {
+      "path": "/api/translations/hello/de-DE"
+    },
+    "httpResponse": {
+      "headers": {
+        "Content-Type": [
+          "text/plain"
+        ]
+      },
+      "body": "Hallo",
+      "delay": {
+        "timeUnit": "MILLISECONDS",
+        "value": 300
+      }
+    }
+  },
+  {
+    "httpRequest": {
+      "path": "/api/translations/hello/fr-FR"
+    },
+    "httpResponse": {
+      "headers": {
+        "Content-Type": [
+          "text/plain"
+        ]
+      },
+      "body": "Bonjour",
+      "delay": {
+        "timeUnit": "MILLISECONDS",
+        "value": 300
+      }
+    }
+  }
+]
