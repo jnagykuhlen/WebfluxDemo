@@ -18,7 +18,7 @@ public class TranslationAdapter extends AbstractAdapter<String> {
     }
 
     public String getTranslation(String word, String language) {
-        return sendRequest(word + "/" + language, String.class);
+        return sendRequest(word + "/" + language, String.class).block();
     }
 
 }

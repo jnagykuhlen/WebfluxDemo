@@ -17,7 +17,7 @@ public abstract class AbstractAdapter<T> {
     private final WebClient webClient;
     private final String urlPrefix;
 
-    protected T sendRequest(String urlSuffix, Class<T> responseClass) {
+    protected Mono<T> sendRequest(String urlSuffix, Class<T> responseClass) {
         String url = urlPrefix + urlSuffix;
         return webClient.get()
                 .uri(url)
@@ -26,8 +26,7 @@ public abstract class AbstractAdapter<T> {
                     String message = "Received status <" + response.statusCode().getReasonPhrase() + "> for URL: " + url;
                     return Mono.error(new NetworkException(message));
                 })
-                .bodyToMono(responseClass)
-                .block();
+                .bodyToMono(responseClass);
     }
 
 }

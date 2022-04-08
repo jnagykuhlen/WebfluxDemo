@@ -19,7 +19,7 @@ public class UserAdapter extends AbstractAdapter<User> {
     }
 
     public User getUser(int userId) {
-        return sendRequest(Integer.toString(userId), User.class);
+        return sendRequest(Integer.toString(userId), User.class).block();
     }
 
 }
