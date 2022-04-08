@@ -1,5 +1,6 @@
 package com.example.webfluxdemo
 
+import kotlinx.coroutines.reactor.awaitSingle
 import org.springframework.http.HttpStatus
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
@@ -9,7 +10,7 @@ abstract class AbstractAdapter(protected val webClient: WebClient,
 
     class NetworkException(message: String) : RuntimeException(message)
 
-    protected inline fun <reified T> sendRequest(urlSuffix: String): Mono<T> {
+    protected suspend inline fun <reified T> sendRequest(urlSuffix: String): T {
         val url = urlPrefix + urlSuffix
         return webClient.get()
                 .uri(url)
@@ -19,5 +20,6 @@ abstract class AbstractAdapter(protected val webClient: WebClient,
                     Mono.error(NetworkException(message))
                 }
                 .bodyToMono(T::class.java)
+                .awaitSingle()
     }
 }

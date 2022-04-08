@@ -11,10 +11,9 @@ private const val GREETING_WORD: String = "hello"
 @Component
 class PersonalizedGreetingService(private val userAdapter: UserAdapter,
                                   private val translationAdapter: TranslationAdapter) {
-    fun personalizeGreeting(userId: Int): Mono<PersonalizedGreeting> =
-            userAdapter.getUser(userId)
-                    .flatMap { user ->
-                        translationAdapter.getTranslation(GREETING_WORD, user.language)
-                                .map { greeting -> PersonalizedGreeting(greeting, user.name) }
-                    }
+    suspend fun personalizeGreeting(userId: Int): PersonalizedGreeting {
+        val user = userAdapter.getUser(userId)
+        val greeting = translationAdapter.getTranslation(GREETING_WORD, user.language)
+        return PersonalizedGreeting(greeting, user.name)
+    }
 }

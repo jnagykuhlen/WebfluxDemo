@@ -2,6 +2,7 @@ package com.example.webfluxdemo.adapters
 
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy
 import org.junit.jupiter.api.Test
@@ -28,7 +29,11 @@ class TranslationAdapterTest {
                         .body("Hallo")
                         .build())
 
-        assertThat(translationAdapter.getTranslation("hello", "de-DE").block()).isEqualTo("Hallo")
+        val actual = runBlocking {
+            translationAdapter.getTranslation("hello", "de-DE")
+        }
+
+        assertThat(actual).isEqualTo("Hallo")
     }
 
     @Test
@@ -36,7 +41,10 @@ class TranslationAdapterTest {
         every { exchangeFunction.exchange(any()) } returns
                 Mono.just(ClientResponse.create(HttpStatus.NOT_FOUND).build())
 
-        assertThatThrownBy { translationAdapter.getTranslation("hello", "it-IT").block() }
-                .hasMessage("Received status <Not Found> for URL: http://localhost:8040/api/translations/hello/it-IT")
+        assertThatThrownBy {
+            runBlocking {
+                translationAdapter.getTranslation("hello", "it-IT")
+            }
+        }.hasMessage("Received status <Not Found> for URL: http://localhost:8040/api/translations/hello/it-IT")
     }
 }

@@ -10,6 +10,6 @@ private const val URL_PREFIX: String = "http://localhost:8040/api/users/"
 
 @Component
 class UserAdapter(webClient: WebClient = WebClient.builder().build()) : AbstractAdapter(webClient, URL_PREFIX) {
-    fun getUser(userId: Int): Mono<User> =
+    suspend fun getUser(userId: Int): User =
             sendRequest(userId.toString())
 }

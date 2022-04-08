@@ -9,6 +9,6 @@ private const val URL_PREFIX: String = "http://localhost:8040/api/translations/"
 
 @Component
 class TranslationAdapter(webClient: WebClient = WebClient.builder().build()) : AbstractAdapter(webClient, URL_PREFIX) {
-    fun getTranslation(word: String, language: String): Mono<String> =
+    suspend fun getTranslation(word: String, language: String): String =
             sendRequest("$word/$language")
 }
