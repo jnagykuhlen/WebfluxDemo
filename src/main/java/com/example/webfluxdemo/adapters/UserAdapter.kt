@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono
 private const val URL_PREFIX: String = "http://localhost:8040/api/users/"
 
 @Component
-class UserAdapter(webClient: WebClient = WebClient.builder().build()) : AbstractAdapter<User>(webClient, URL_PREFIX) {
+class UserAdapter(webClient: WebClient = WebClient.builder().build()) : AbstractAdapter(webClient, URL_PREFIX) {
     fun getUser(userId: Int): Mono<User> =
-            sendRequest(userId.toString(), User::class.java)
+            sendRequest(userId.toString())
 }
