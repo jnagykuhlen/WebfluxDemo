@@ -45,6 +45,6 @@ class TranslationAdapterTest {
             runBlocking {
                 translationAdapter.getTranslation("hello", "it-IT")
             }
-        }.hasMessage("Received status <Not Found> for URL: http://localhost:8040/api/translations/hello/it-IT")
+        }.hasMessage("Received status <404 NOT_FOUND> for URL: http://localhost:8040/api/translations/hello/it-IT")
     }
 }

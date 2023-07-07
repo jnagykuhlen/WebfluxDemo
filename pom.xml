@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.2</version>
+        <version>3.1.1</version>
         <relativePath/>
     </parent>
     <groupId>com.example</groupId>
@@ -15,7 +15,7 @@
     <description>Demo application for Spring Webflux</description>
 
     <properties>
-        <kotlin.version>1.6.20</kotlin.version>
+        <kotlin.version>1.8.22</kotlin.version>
     </properties>
 
     <dependencies>
@@ -34,13 +34,13 @@
         <dependency>
             <groupId>org.jetbrains.kotlinx</groupId>
             <artifactId>kotlinx-coroutines-core</artifactId>
-            <version>1.6.0</version>
+            <version>1.7.2</version>
         </dependency>
 
         <dependency>
             <groupId>org.jetbrains.kotlinx</groupId>
             <artifactId>kotlinx-coroutines-reactor</artifactId>
-            <version>1.6.0</version>
+            <version>1.7.2</version>
         </dependency>
 
         <dependency>
@@ -50,7 +50,7 @@
 
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-test</artifactId>
+            <artifactId>kotlin-test-junit</artifactId>
             <version>${kotlin.version}</version>
             <scope>test</scope>
         </dependency>
@@ -63,8 +63,8 @@
 
         <dependency>
             <groupId>io.mockk</groupId>
-            <artifactId>mockk</artifactId>
-            <version>1.12.2</version>
+            <artifactId>mockk-jvm</artifactId>
+            <version>1.13.5</version>
             <scope>test</scope>
         </dependency>
 
@@ -78,16 +78,16 @@
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version>
+                <version>3.1.2</version>
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.22.2</version>
+                <version>3.1.2</version>
             </plugin>
             <plugin>
                 <groupId>org.mock-server</groupId>
                 <artifactId>mockserver-maven-plugin</artifactId>
-                <version>5.11.2</version>
+                <version>5.15.0</version>
                 <configuration>
                     <serverPort>8040</serverPort>
                     <logLevel>WARN</logLevel>
@@ -115,7 +115,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <jvmTarget>1.8</jvmTarget>
+                    <jvmTarget>17</jvmTarget>
                 </configuration>
             </plugin>
         </plugins>
