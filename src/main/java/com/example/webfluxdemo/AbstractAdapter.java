@@ -1,7 +1,7 @@
 package com.example.webfluxdemo;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
@@ -22,8 +22,8 @@ public abstract class AbstractAdapter<T> {
         return webClient.get()
                 .uri(url)
                 .retrieve()
-                .onStatus(HttpStatus::is4xxClientError, response -> {
-                    String message = "Received status <" + response.statusCode().getReasonPhrase() + "> for URL: " + url;
+                .onStatus(HttpStatusCode::is4xxClientError, response -> {
+                    String message = "Received status <" + response.statusCode() + "> for URL: " + url;
                     return Mono.error(new NetworkException(message));
                 })
                 .bodyToMono(responseClass);
