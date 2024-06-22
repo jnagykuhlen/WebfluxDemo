@@ -4,7 +4,6 @@ import com.example.webfluxdemo.AbstractAdapter
 import com.example.webfluxdemo.model.User
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
-import reactor.core.publisher.Mono
 
 private const val URL_PREFIX: String = "http://localhost:8040/api/users/"
 

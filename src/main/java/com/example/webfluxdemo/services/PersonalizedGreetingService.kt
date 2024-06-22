@@ -4,7 +4,6 @@ import com.example.webfluxdemo.adapters.TranslationAdapter
 import com.example.webfluxdemo.adapters.UserAdapter
 import com.example.webfluxdemo.model.PersonalizedGreeting
 import org.springframework.stereotype.Component
-import reactor.core.publisher.Mono
 
 private const val GREETING_WORD: String = "hello"
 
